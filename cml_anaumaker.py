@@ -174,11 +174,18 @@ s = mondaibun.replace('\n','')
 # 選択肢の内包化されたものがある場合、文字数の長いものを優先的に置き換える
 # 【脊髄神経】は【脊髄】より先に置き換えられる
 error_found = False
+
+#穴埋め選択肢を長い順に並べ直して長いものから検索する
 ana.sort(key=len,reverse=True)
+#長い選択肢を見つけたら問題文から削っていく処理を行う
+s_check = s[:]
 for target in ana:
-  if s.find(target) == -1:
+  if s_check.find(target) == -1:
     print('**{0}** が本文中に見つかりませんでした。選択肢か本文を見直してください。'.format(target))
     error_found = True
+  else:
+             #長い選択肢を見つけたら問題文から削っていく処理を行う
+             s_check = s_check.replace(target, '', -1)
 
 # alt選択肢が本文中に出現しないかどうかチェックする
 for target in alt:
