@@ -178,10 +178,14 @@ def update_items(n_clicks,options,dd_values,add_value,mondaibun):
     opt.append({'value':add_value, 'label':add_value})
     v.append(add_value)
     v.sort(key=len,reverse=True)
+    s_check = s[:]
     for target in v:
-      if s.find(target) == -1:
+      if s_check.find(target) == -1:
         msg = '**{}** が本文中に見つかりませんでした。選択肢か本文を見直してください。'.format(target)
         return '', dash.no_update, dash.no_update, msg
+      else:
+        #長い選択肢を見つけたら問題文から削っていく処理を行う
+        s_check = s_check.replace(target, '', -1)
     return '', opt, v, ''
   else:
     # PreventUpdate prevents ALL outputs updating
